@@ -64,7 +64,7 @@ public class SellerAction extends ActionSupport {
 	@Action(value = "get", results = { @Result(name = "success", type = "json") }, params = {
 			"contentType", "text/html" })
 	public String get() {
-		resultMap.put("seller", sellerService.find(id));
+	 	 resultMap.put("seller", sellerService.find(id));
 		resultMap.put("state", "success");
 		resultMap.put("msg", "删除成功");
 		return SUCCESS;
