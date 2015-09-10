@@ -27,7 +27,7 @@ public class ItemAction  extends ActionSupport{
      private String name;
      private Long id;
      private Item item;
-	 private List<Category> categorys;
+	  private List<Category> categorys;
 	 private Map<String,Object> resultMap= new HashMap<String,Object>();
      @Autowired
      private ItemService itemService;
