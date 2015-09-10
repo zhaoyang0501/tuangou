@@ -19,16 +19,36 @@ public class Item  {
 	private String name;
 	private String remark;
 	private String imgPath;
-	@ManyToOne(fetch = FetchType.EAGER)
-	private User user;
 	private Double score;
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Category category;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Category seller;
+	
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	
+	public Category getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Category seller) {
+		this.seller = seller;
+	}
 
 	private Date createDate;
 	
 	private Integer count;
 	
+	
+	private Double price;
 	public Integer getCount() {
 		return count;
 	}
@@ -52,16 +72,6 @@ public class Item  {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public Long getId() {
 		return id;
 	}

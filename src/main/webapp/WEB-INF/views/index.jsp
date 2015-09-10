@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8">
-<title>懒人坊</title>
+<title>一起购吧！</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -43,7 +43,7 @@ color: #96979d  !important;
         <aside class="span3">
           <!-- Category-->
 
-          <h2 class="heading2"><span>菜谱分类</span></h2>
+          <h2 class="heading2"><span>商品分类</span></h2>
           <ul class="nav nav-list categories">
 	          <c:forEach items="${categorys }" var="bean">
 	           <li> <a href="find?category.id=${bean.id }">${bean.name }</a> </li>

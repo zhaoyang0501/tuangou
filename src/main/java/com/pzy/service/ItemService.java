@@ -51,11 +51,6 @@ public class ItemService {
 	public Item save(Item cookBook) {
 		return cookBookRepository.save(cookBook);
 	}
-
-	public List<Item> findByUser(User user) {
-		return cookBookRepository.findByUser(user);
-	}
-
 	public Item find(Long id) {
 		return cookBookRepository.findOne(id);
 	}

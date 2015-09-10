@@ -4,7 +4,7 @@
 <html lang="ch">
 <%@ include file="../common/meta.jsp"%>
 <head>
-<script type="text/javascript" src="${pageContext.request.contextPath}/admin/js/ace/admin.cookbook.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/admin/js/ace/admin.item.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/admin/js/falgun/bootbox.js"></script>
 <script src="${pageContext.request.contextPath}/admin/js/falgun/bootstrap-datetimepicker.min.js"></script>
 <script src="${pageContext.request.contextPath}/admin/js/falgun/bootstrap-datetimepicker.zh-CN.js"></script>
@@ -39,12 +39,12 @@
 					<div class="span12">
 						<div class="content-widgets light-gray">
 							<div class="widget-head  bondi-blue" >
-								<h3>菜谱管理</h3>
+								<h3>商品管理</h3>
 							</div>
 							<div class="box well form-inline">
 								<span>名称：</span>
 								<input type="text" id="name_" >
-								<a onclick="$.adminCookBook.initSearchDataTable()"
+								<a onclick="$.adminItem.initSearchDataTable()"
 									class="btn btn-info" data-loading-text="正在加载..."><i class="icon-search"></i>查询</a>
 							</div>
 							
@@ -54,14 +54,14 @@
 									<thead>
 										<tr>
 											<th >id</th>
+											<th >商品图片</th>
 											<th >名称</th>
 											<th >分类</th>
-											<th >子类</th>
-											<th >简介</th>
-											<th >点击</th>
-											<th >评分</th>
-											<th >上传者</th>
+											<th >供应商</th>
+											<th >库存</th>
+											<th >价格</th>
 											<th >上传时间</th>
+											<th >详情</th>
 											<th >操作</th>
 										</tr>
 									</thead>

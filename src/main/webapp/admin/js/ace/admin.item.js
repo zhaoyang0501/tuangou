@@ -1,4 +1,4 @@
-jQuery.adminCookBook = {
+jQuery.adminItem = {
 		dataTable:null,
 		toSave:false,
 		initSearchDataTable : function() {
@@ -27,7 +27,7 @@ jQuery.adminCookBook = {
 					"sServerMethod" : "POST",
 					"bProcessing" : true,
 					"bSort" : false,
-					"sAjaxSource" : $.ace.getContextPath() + "/admin/cookbook/list",
+					"sAjaxSource" : $.ace.getContextPath() + "/admin/item/list",
 					"fnDrawCallback" : function(oSettings) {
 						$('[rel="popover"],[data-rel="popover"]').popover();
 					},
@@ -54,26 +54,26 @@ jQuery.adminCookBook = {
 					}, {
 						"mDataProp" : "name"
 					}, {
+						"mDataProp" : "imgPath"
+					}, {
 						"mDataProp" : "category.name"
 					}, {
-						"mDataProp" : "categorySub.name"
-					}, {
-						"mDataProp" : "remark"
+						"mDataProp" : "seller.name"
 					}, {
 						"mDataProp" : "count"
 					}, {
-						"mDataProp" : "score"
-					}, {
-						"mDataProp" : "user.name"
+						"mDataProp" : "price"
 					}, {
 						"mDataProp" : "createDate"
-					}
-					, {
+					}, {
+						"mDataProp" : "remark"
+					},
+					 {
 						"mDataProp" : ""
 					}],
 					"aoColumnDefs" : [
 						{
-							'aTargets' : [4],
+							'aTargets' : [8],
 							'fnRender' : function(oObj, sVal) {
 								if(sVal.length>10)
 									return sVal.substring(0,10)+".....";
@@ -84,8 +84,8 @@ jQuery.adminCookBook = {
 						{
 							'aTargets' : [9],
 							'fnRender' : function(oObj, sVal) {
-								return "<button class=\"btn2 btn-info\" onclick=\"$.adminCookBook.showEdit("+oObj.aData.id+")\"><i class=\"icon-pencil\"></i>修改</button>"+
-								 "  &nbsp;<button class=\"btn2 btn-info\" onclick=\"$.adminCookBook.deleteit("+oObj.aData.id+")\"><i class=\"icon-trash\"></i> 删除</button>";
+								return "<button class=\"btn2 btn-info\" onclick=\"$.adminItem.showEdit("+oObj.aData.id+")\"><i class=\"icon-pencil\"></i>修改</button>"+
+								 "  &nbsp;<button class=\"btn2 btn-info\" onclick=\"$.adminItem.deleteit("+oObj.aData.id+")\"><i class=\"icon-trash\"></i> 删除</button>";
 							}
 						},
 					 {
@@ -107,12 +107,12 @@ jQuery.adminCookBook = {
 	            if(result){
 	            	$.ajax({
 	        			type : "get",
-	        			url : $.ace.getContextPath() + "/admin/cookbook/delete?id="+id,
+	        			url : $.ace.getContextPath() + "/admin/item/delete?id="+id,
 	        			dataType : "json",
 	        			success : function(json) {
 	        				if(json.resultMap.state=='success'){
 	        					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"success","timeout":"2000"});
-	        					$.adminCookBook.initSearchDataTable();
+	        					$.adminItem.initSearchDataTable();
 	        				}else{
 	        					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"warning"});
 	        				}
@@ -124,21 +124,21 @@ jQuery.adminCookBook = {
 		update : function (){
 				$.ajax({
 	    			type : "post",
-	    			url : $.ace.getContextPath() + "/admin/cookbook/update",
+	    			url : $.ace.getContextPath() + "/admin/item/update",
 	    			data:{
-	    				"cookBook.id":$("#id").val(),
-	    				"cookBook.name":$("#name").val(),
-	    				"cookBook.remark":$("#remark").val(),
-	    				"cookBook.category.id":$("#category").val(),
-	    				"cookBook.categorySub.id":$("#categorySub").val(),
-	    				"cookBook.count":$("#count").val(),
-	    				"cookBook.score":$("#score").val()
+	    				"item.id":$("#id").val(),
+	    				"item.name":$("#name").val(),
+	    				"item.remark":$("#remark").val(),
+	    				"item.category.id":$("#category").val(),
+	    				"item.categorySub.id":$("#categorySub").val(),
+	    				"item.count":$("#count").val(),
+	    				"item.score":$("#score").val()
 	    			},
 	    			dataType : "json",
 	    			success : function(json) {
 	    				if(json.resultMap.state=='success'){
 	    					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"success","timeout":"2000"});
-	    					$.adminCookBook.initSearchDataTable();
+	    					$.adminItem.initSearchDataTable();
 	    					$("#resource_modal").modal('hide');
 	    				}else{
 	    					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"warning"});
@@ -150,7 +150,7 @@ jQuery.adminCookBook = {
 			$("#id").val(id);
 			$.ajax({
     			type : "get",
-    			url : $.ace.getContextPath() + "/admin/cookbook/get?id="+id,
+    			url : $.ace.getContextPath() + "/admin/item/get?id="+id,
     			dataType : "json",
     			success : function(json) {
     				if(json.resultMap.state=='success'){
@@ -170,7 +170,7 @@ jQuery.adminCookBook = {
 		changeCategory:function(){
 			$.ajax({
     			type : "get",
-    			url : $.ace.getContextPath() + "/admin/cookbook/querySubCategory?id="+$("#category").val(),
+    			url : $.ace.getContextPath() + "/admin/item/querySubCategory?id="+$("#category").val(),
     			dataType : "json",
     			success : function(json) {
     				if(json.resultMap.state=='success'){
