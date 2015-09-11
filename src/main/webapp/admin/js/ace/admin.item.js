@@ -147,6 +147,7 @@ jQuery.adminItem = {
 	    		});
 		},
 		showEdit: function (id){
+			alert();
 			$("#id").val(id);
 			$.ajax({
     			type : "get",
@@ -154,33 +155,25 @@ jQuery.adminItem = {
     			dataType : "json",
     			success : function(json) {
     				if(json.resultMap.state=='success'){
-    					$("#resource_modal").modal('show');
-    					$("#category").val(json.resultMap.object.category.id);
-    					$("#name").val(json.resultMap.object.name);
-    					$("#categorySub").val(json.resultMap.object.categorySub.id);
-    					$("#count").val(json.resultMap.object.count);
-    					$("#score").val(json.resultMap.object.score);
-    					$("#remark").val(json.resultMap.object.remark);
+    					$("#modal_header_label").text("修改商品");
+    					$("#item_modal").modal('show');
+    					$("input[name='item.name']").val(json.resultMap.object.name);
+    					$("input[name='item.category.id']").val(json.resultMap.object.category.id);
+    					$("input[name='item.count']").val(json.resultMap.object.count);
+    					$("input[name='item.price']").val(json.resultMap.object.price);
+    					$("input[name='item.remark']").val(json.resultMap.object.remark);
     				}else{
     					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"warning"});
     				}
     			}
     		});
 		},
-		changeCategory:function(){
-			$.ajax({
-    			type : "get",
-    			url : $.ace.getContextPath() + "/admin/item/querySubCategory?id="+$("#category").val(),
-    			dataType : "json",
-    			success : function(json) {
-    				if(json.resultMap.state=='success'){
-    					$("#categorySub").html("");
-    					for (var i = 0; i < json.resultMap.object.length; i++) {
-    						$("#categorySub").append("<option value='" +json.resultMap.object[i].id + "'>" + json.resultMap.object[i].name + "</option>");
-    					}
-    				}
-    			}
-    		});
-			
+		showaddModal: function(id){
+			$.adminItem.toSave=true;
+			$("#modal_header_label").text("新增分类");
+			$("#item_modal").modal('show');
+		},
+		save : function (){
+			$("#_form").submit();
 		}
 };

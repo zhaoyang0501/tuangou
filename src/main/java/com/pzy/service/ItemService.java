@@ -23,7 +23,7 @@ import com.pzy.repository.ItemRepository;
 @Service
 public class ItemService {
 	@Autowired
-	private ItemRepository cookBookRepository;
+	private ItemRepository itemRepository;
 	
 	
 	public Page<Item> findAll(final int pageNumber, final int pageSize,
@@ -43,35 +43,35 @@ public class ItemService {
 				return predicate;
 			}
 		};
-		Page<Item> result = (Page<Item>) cookBookRepository.findAll(
+		Page<Item> result = (Page<Item>) itemRepository.findAll(
 				spec, pageRequest);
 		return result;
 	}
 
-	public Item save(Item cookBook) {
-		return cookBookRepository.save(cookBook);
+	public Item save(Item item) {
+		return itemRepository.save(item);
 	}
 	public Item find(Long id) {
-		return cookBookRepository.findOne(id);
+		return itemRepository.findOne(id);
 	}
 
 	public void delete(Long id) {
-		Item cookBook=this.cookBookRepository.findOne(id);
-		cookBookRepository.delete(id);
+		Item item=this.itemRepository.findOne(id);
+		itemRepository.delete(id);
 	}
 
 	public List<Item> findHot() {
-		return cookBookRepository.findAll(
+		return itemRepository.findAll(
 				new PageRequest(0, 6, new Sort(Direction.DESC, "count")))
 				.getContent();
 	}
 
 	public List<Item> findNew() {
-		return cookBookRepository.findAll(
+		return itemRepository.findAll(
 				new PageRequest(0, 6, new Sort(Direction.DESC, "createDate")))
 				.getContent();
 	}
 	public List<Item> findByCategory( Category category) {
-		return cookBookRepository.findByCategory(category);
+		return itemRepository.findByCategory(category);
 	}
 }

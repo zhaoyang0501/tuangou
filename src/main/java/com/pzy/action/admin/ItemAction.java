@@ -1,9 +1,14 @@
 package com.pzy.action.admin;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -27,8 +32,12 @@ public class ItemAction  extends ActionSupport{
      private String name;
      private Long id;
      private Item item;
+     private File imgPath;  
+ 	 private String imgPathContentType;  
+	private String imgPathFileName;  
 	  private List<Category> categorys;
-	 private Map<String,Object> resultMap= new HashMap<String,Object>();
+	  private String tip;
+	private Map<String,Object> resultMap= new HashMap<String,Object>();
      @Autowired
      private ItemService itemService;
      @Autowired
@@ -38,6 +47,7 @@ public class ItemAction  extends ActionSupport{
     	  categorys=categoryService.findCategorys();
           return SUCCESS;
      }
+    
      
     @Action(value = "list", results = { @Result(name = "success", type = "json") }, params = { "contentType", "text/html" })  
      public String list(){
@@ -51,6 +61,26 @@ public class ItemAction  extends ActionSupport{
           return SUCCESS;
      }
      
+    
+    @Action(value = "save", results = { @Result(name = "success", location = "/WEB-INF/views/admin/item/index.jsp") })
+	public String save() throws Exception {
+    	item.setCreateDate(new Date(System.currentTimeMillis()));
+		item.setImgPath(this.imgPathFileName);
+		itemService.save(item);
+		/**文件上传逻辑*/
+		String realpath = ServletActionContext.getServletContext().getRealPath("/upload");
+		System.out.println(realpath);
+		File saveImg = new File(new File(realpath), this.imgPathFileName);
+         try {
+			FileUtils.copyFile(imgPath, saveImg);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+         tip="新增商品成功";
+       return SUCCESS;
+	}
+    
     @Action(value = "delete", results = { @Result(name = "success", type = "json") }, params = { "contentType", "text/html" })  
         public String delete(){
          try {
@@ -68,7 +98,7 @@ public class ItemAction  extends ActionSupport{
     public String get(){
      resultMap.put("object", itemService.find(id));
      resultMap.put("state", "success");
-     resultMap.put("msg", "删除成功");
+     resultMap.put("msg", "成功");
          return SUCCESS;
     }
     
@@ -86,59 +116,64 @@ public class ItemAction  extends ActionSupport{
      return SUCCESS;
     }
      /*~~~~~~~~get and setter~~~~~~~~~*/
-     @JSON  
-     public Map<String,Object> getResultMap() {
-          return resultMap;
-     }
+	@JSON
+	public Map<String, Object> getResultMap() {
+		return resultMap;
+	}
 
-     public void setResultMap(Map<String,Object> resultMap) {
-          this.resultMap = resultMap;
-     }
-     public Integer getSEcho() {
- 		return sEcho;
- 	}
+	public void setResultMap(Map<String, Object> resultMap) {
+		this.resultMap = resultMap;
+	}
 
- 	public void setSEcho(Integer sEcho) {
- 		this.sEcho = sEcho;
- 	}
+	public Integer getSEcho() {
+		return sEcho;
+	}
 
- 	public Integer getIDisplayStart() {
- 		return iDisplayStart;
- 	}
+	public void setSEcho(Integer sEcho) {
+		this.sEcho = sEcho;
+	}
 
- 	public void setIDisplayStart(Integer idisplayStart) {
- 		this.iDisplayStart = idisplayStart;
- 	}
+	public Integer getIDisplayStart() {
+		return iDisplayStart;
+	}
 
- 	public Integer getIDisplayLength() {
- 		return iDisplayLength;
- 	}
+	public void setIDisplayStart(Integer idisplayStart) {
+		this.iDisplayStart = idisplayStart;
+	}
 
- 	public void setIDisplayLength(Integer iDisplayLength) {
- 		this.iDisplayLength = iDisplayLength;
- 	}
+	public Integer getIDisplayLength() {
+		return iDisplayLength;
+	}
 
-     public String getName() {
-          return name;
-     }
+	public void setIDisplayLength(Integer iDisplayLength) {
+		this.iDisplayLength = iDisplayLength;
+	}
 
-     public void setName(String userName) {
-          this.name = userName;
-     }
-     public Long getId() {
-          return id;
-     }
-     public void setId(Long id) {
-          this.id = id;
-     }
-     public Item getItem() {
- 		return item;
- 	}
- 	public void setItem(Item item) {
- 		this.item = item;
- 	}
- 	  
-    public List<Category> getCategorys() {
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String userName) {
+		this.name = userName;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public List<Category> getCategorys() {
 		return categorys;
 	}
 
@@ -153,4 +188,37 @@ public class ItemAction  extends ActionSupport{
 	public void setCategorySubs(List<Category> categorySubs) {
 		this.categorys = categorySubs;
 	}
+
+	public String getTip() {
+		return tip;
+	}
+
+	public void setTip(String tip) {
+		this.tip = tip;
+	}
+
+	public File getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(File imgPath) {
+		this.imgPath = imgPath;
+	}
+
+	public String getImgPathContentType() {
+		return imgPathContentType;
+	}
+
+	public void setImgPathContentType(String imgPathContentType) {
+		this.imgPathContentType = imgPathContentType;
+	}
+
+	public String getImgPathFileName() {
+		return imgPathFileName;
+	}
+
+	public void setImgPathFileName(String imgPathFileName) {
+		this.imgPathFileName = imgPathFileName;
+	}
+
 }

@@ -21,6 +21,9 @@
 			minView: 2,
 			forceParse: 0
 	    });
+		if("${tip}" != null && "${tip}" != ""){
+			noty({"text":"${tip}","layout":"top","type":"success","timeout":"2000"});
+		}
 	});
 </script>
 </head>
@@ -49,6 +52,7 @@
 							</div>
 							
 							<div class="widget-container">
+							<a class="btn btn-success" style="float: right; margin: 5px;" onclick="$.adminItem.showaddModal()"><i class="icon-plus"></i> 新增</a>
 								<table class="responsive table table-striped table-bordered"
 									id="dt_table_view">
 									<thead>
@@ -78,7 +82,7 @@
 	</div>
 
 	<!-- 编辑新增弹出框 -->
-	<div class="modal hide fade" id="resource_modal">
+	<div class="modal hide fade" id="item_modal">
 		<div class="modal-header blue">
 			<button type="button" class="close" data-dismiss="modal">×</button>
 			<label id="modal_header_label"></label>
@@ -87,19 +91,26 @@
 			<div class="row-fluid">
 				<div class="span12">
 					<div class="form-container grid-form form-background left-align form-horizontal">
-						<form action="" method="get" id=''>
-							<input type="hidden" id="id" value="">
+						 <form id='_form' action="${pageContext.request.contextPath}/admin/item/save"   enctype="multipart/form-data" method="post">
+							<input type="hidden" id="item.id" value="">
 							<div class="control-group">
-								<label for="name" class="control-label">名称：</label>
+								<label for="name" class="control-label">商品图片：</label>
 								<div class="controls">
-									<input type="text" id="name" value="" placeholder="">
+									<input type="file" name="imgPath" value="" placeholder="">
+								</div>
+							</div>
+							
+							<div class="control-group">
+								<label for="name" class="control-label">商品名称：</label>
+								<div class="controls">
+									<input type="text" name="item.name" value="" placeholder="">
 								</div>
 							</div>
 							
 							<div class="control-group" id='control_project'>
 								<label for="category" class="control-label">分类：</label>
 								<div class="controls">
-									<select id='category' onchange="$.adminCookBook.changeCategory()">
+									<select id='category' name='item.category.id'>
 											<option value=""></option>
 											<c:forEach items="${categorys }" var="bean">
 												<option value="${bean.id }">${bean.name }</option>
@@ -108,36 +119,24 @@
 								</div>
 							</div>
 							
-							<div class="control-group" id='control_project'>
-								<label for="categorySub" class="control-label">小类：</label>
-								<div class="controls">
-									<select id='categorySub' onchange="">
-											<option value=""></option>
-											<c:forEach items="${categorySubs }" var="bean">
-												<option value="${bean.id }">${bean.name }</option>
-											</c:forEach>
-									</select>
-								</div>
-							</div>
 							
 							<div class="control-group">
-								<label for="count" class="control-label">点击：</label>
+								<label for="name" class="control-label">库存：</label>
 								<div class="controls">
-									<input type="text" id="count" value="" placeholder="">
+									<input type="text" name="item.count" value="" placeholder="">
 								</div>
 							</div>
-							
 							<div class="control-group">
-								<label for="name" class="control-label">评分：</label>
+								<label for="name" class="control-label">价格：</label>
 								<div class="controls">
-									<input type="text" id="score" value="" placeholder="">
+									<input type="text" name="item.price" value="" placeholder="">
 								</div>
 							</div>
 							
 							<div class="control-group" id='control_project'>
 								<label for="remark" class="control-label">简介：</label>
 								<div class="controls">
-									<textarea id="remark" placeholder="" rows="3">
+									<textarea name="item.remark" placeholder="" rows="3">
 									</textarea>
 								</div>
 							</div>
@@ -150,7 +149,7 @@
 		</div>
 		
 		<div class="modal-footer center" id="div_footer">
-			<a class="btn btn-primary" onclick="$.adminCookBook.update()">保存</a>
+			<a class="btn btn-primary" onclick="$.adminItem.save()">保存</a>
 			<a href="#"   class="btn" data-dismiss="modal" id="closeViewModal">关闭</a>
 		</div>
 	</div>

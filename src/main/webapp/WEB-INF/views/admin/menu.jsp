@@ -29,6 +29,7 @@
 					<li><a href="${pageContext.request.contextPath}/admin/category/index"><i class="icon-upload"></i> 分类管理 </a></li>
 					<li><a href="${pageContext.request.contextPath}/admin/seller/index"><i class="icon-upload"></i> 供应商管理 </a></li>
 					<li><a href="${pageContext.request.contextPath}/admin/item/index"><i class="icon-zoom-in"></i> 商品管理</a></li>
+					<li><a href="${pageContext.request.contextPath}/admin/order/index"><i class="icon-zoom-in"></i>订单管理</a></li>
 				</ul>
 			</div>
 		</div>
