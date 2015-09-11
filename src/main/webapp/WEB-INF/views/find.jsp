@@ -40,10 +40,10 @@ left: 0px;
         <aside class="span3">
           <!-- Category-->
 
-          <h2 class="heading2"><span>菜谱分类</span></h2>
+          <h2 class="heading2"><span>商品分类</span></h2>
           <ul class="nav nav-list categories">
 	          <c:forEach items="${categorys }" var="bean">
-	           <li> <a href="find?category.id=${bean.id }">${bean.name }</a> </li>
+	           <li> <a href="gocategory?category.id=${bean.id }">${bean.name }</a> </li>
 	          </c:forEach>
           </ul>
               <!--  Best Seller -->  
@@ -67,23 +67,23 @@ left: 0px;
         <section id="featured" class="row mt40">
           <h1 class="heading1"><span class="maintext">${category.name }</span></h1>
           <ul class="thumbnails">
-           <c:forEach items="${cookBooks}" var="bean">
-		          	<li class="span3">
-		              <div class="">
-			              <a href="${pageContext.request.contextPath}/detail?cookBook.id=${bean.id}" ><img alt="" style="min-width: 270px;" src="${pageContext.request.contextPath}/upload/${bean.imgPath}">
-			              <span class="viewfancypopup">&nbsp;</span><span class="viewfancypopup">&nbsp;</span><span class="viewfancypopup">&nbsp;</span></a>
-			              <div class="caption">
-				                <a href="${pageContext.request.contextPath}/detail?cookBook.id=${bean.id}" class="bloggridtitle">${bean.name } </a>               
-				                <div class="author">上传 : <a href="#"> ${bean.user.nickname }</a>
-				                </div>
-				                <div>
-				                      <span class="mr10"><i class="icon-calendar"></i> ${bean.createDate } </span>
-				                      <span class="mr10"><a href="#"><i class="icon-comment"></i> 评分：${bean.score }</a> </span><br>
-				                </div>
-			              </div>
-		              </div>
-		            </li>
-		    </c:forEach>
+           <c:forEach items="${items}" var="bean">
+				        <li class="span3">
+				          <a class="prdocutname" href="product.html">${bean.name } </a>
+				          <div class="thumbnail">
+				            <span class="sale tooltip-test" data-original-title="">Sale</span>
+				            <a href="${pageContext.request.contextPath}/detail?item.id=${bean.id}"><img alt="" src="${pageContext.request.contextPath}/upload/${bean.imgPath}"></a>
+				           
+				            <div class="pricetag">
+				              <span class="spiral"></span><a href="${pageContext.request.contextPath}/goorder?item.id=${bean.id}" class="productcart">  立 即 购 买！</a>
+				              <div class="price">
+				                <div class="pricenew">¥${bean.price}</div>
+				              </div>
+				            </div>
+				          </div>
+				        </li>
+			   </c:forEach>
+			   </ul>
         </section>
       </div>
                   <!-- Category-->

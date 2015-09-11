@@ -22,23 +22,6 @@
     <![endif]-->
 <!-- fav -->
 <link rel="shortcut icon" href="assets/ico/favicon.html">
-<script type="text/javascript">
-function save_collect(id){
-	$.ajax({
-		   type: "POST",
-		   url: "${pageContext.request.contextPath}/saveCollect",
-		   data: "cookBook.id="+id,
-		   success: function(msg){
-		     if(msg.tip=='ok'){
-		    	 alert("收藏成功！");
-		    	 $("#bt_collect").html("已收藏");
-		    	 $("#bt_collect").attr("disabled","disabled");
-		     }
-		   }
-		});
-}
-
-</script>
 </head>
 <body>
 <!-- Header Start -->
@@ -48,78 +31,57 @@ function save_collect(id){
 <div id="maincontainer">
   <section id="product">
     <div class="container">
-      <div class="row">        
-     <div class="span12">
-         <!-- Blog start-->   
-          <section id="latestblog">         
-            <div class="blogdetail">
-              <h2 class="heading2"><span>${cookBook.name }</span></h2>
-              
-              <hr>
-              <ul class="margin-none">
-                <li class="listblcok" style="border-bottom:none;">
-                  <div class="mb20">
-                    <a class="fancyboxpopup thumbnail" href="${pageContext.request.contextPath}/upload/${cookBook.imgPath}"><img src="${pageContext.request.contextPath}/upload/${cookBook.imgPath}" alt=""></a>
-                  </div>
-                </li>
-                <li class="listblcok" style="border-bottom:none;">
-                		请评分：<div style="display: inline;" ID='star'></div>${cookBook.score }分
-                </li>
-                <li class="listblcok" style="border-bottom:none;">
-                 <button  id='bt_collect'  onclick="save_collect(${cookBook.id })" class="btn btn-orange pull-left" >收藏菜谱</button>
-                </li>
-                
-                <li>
-                <div class="bshare-custom">
-				   <a title="分享到" href="http://www.bshare.cn/share" id="bshare-shareto" class="bshare-more"></a>
-				
-				   <a title="分享到腾讯朋友" class="bshare-qqxiaoyou"></a>
-				   <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
-				   <a title="分享到人人网" class="bshare-renren"></a>
-				   <a title="分享到开心网" class="bshare-kaixin001"></a>
-				   <a title="分享到豆瓣" class="bshare-douban"></a>
-				   <!-- 在这里添加更多平台 -->
-				
-				   <a title="更多平台" id="bshare-more-icon" class="bshare-more"></a>
-				</div>
-				<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&style=-1"></script>
-				<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC2P.js"></script>
+      <div class="row">
+       <!-- Left Image-->
+        <div class="span5">
+          <ul class="thumbnails mainimage">
+          <li class="span5">
+              <a  rel="position: 'inside' , showTitle: false, adjustX:-4, adjustY:-4" class="thumbnail cloud-zoom" href="${pageContext.request.contextPath}/upload/${item.imgPath}">
+                <img src="${pageContext.request.contextPath}/upload/${item.imgPath}" alt="" title="">
+              </a>
+            </li>
+          </ul>
+        </div>
+         <!-- Right Details-->
+        <div class="span7">
+          <div class="row">
+            <div class="span7">
+              <h1 class="productname"><span class="bgnone">${bean.name}</span></h1>
+              <div class="productprice">
+                <div class="productpageprice">
+                  <span class="spiral"></span>¥${item.price}</div>
+                <ul class="rate">
+                  <li class="on"></li>
+                  <li class="on"></li>
+                  <li class="on"></li>
+                  <li class="on"></li>
+                  <li class="off"></li>
+                </ul>
+              </div>
+              <ul class="productpagecart">
+                <li><a class="cart" href="${pageContext.request.contextPath}/goorder?item.id=${item.id}">立即购买！</a>
                 </li>
               </ul>
-			     
-                	<h2 class='heading2' >简介</h2>
-                	<hr>
-                	<p>
-                		${cookBook.remark }
-                	</p>
-                	<h2 class='heading2' >用料</h2>
-                	<hr>
-									<table class='table table-bordered '>
-
-										<tbody>
-										<c:forEach items="${cookBook.cookFoods }" var="bean">
-											<tr>
-												<td class="name has-border">${bean.name }</td>
-												<td class="unit has-border">${bean.number }</td>
-											</tr>
-										</c:forEach>
-										</tbody>
-									</table>
-									<h2 class='heading2' >做法</h2>
-                					<hr>
-                					<ul>
-	                					<c:forEach items="${cookBook.cookSteps }" var="bean" varStatus="status">
-		                					 <li >
-								              <h3 >第${status.index +1}步：${bean.name }</h3>
-								              <img src="${pageContext.request.contextPath}/upload/${bean.imgPath}" alt="葡式蛋挞的做法 步骤1" width="200">
-								            </li>
-	                					</c:forEach>
-          							</ul>
+         <!-- Product Description tab & comments-->
+         <div class="productdesc">
+                <ul class="nav nav-tabs" id="myTab">
+                  <li class="active"><a href="#description">详情</a>
+                  </li>
+                  
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane active" id="description">
+                    <h2>供应商:${item.seller.name }</h2>
+                     <h2>库存:${item.count}</h2>
+                   	  <h2>商品介绍</h2>
+                    	${item.remark}
+                  </div>
+                </div>
+              </div>
             </div>
-          </section>
+          </div>
         </div>
-      
-       </div>
+      </div>
     </div>
   </section>
 </div>
@@ -143,21 +105,4 @@ function save_collect(id){
 <script type="text/javascript" src="js/jquery.ba-throttle-debounce.min.js"></script>
 <script defer="" src="js/custom.js"></script>
 <script type="text/javascript" src="js/jquery.raty.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#star').raty({
-				start:${cookBook.score==null?0:cookBook.score},
-			  	onClick: function(score) {
-			  		$.ajax({
-			 		   type: "POST",
-			 		   url: "${pageContext.request.contextPath}/giveScore",
-			 		   data: "cookBook.id=${cookBook.id}&score="+score,
-			 		   success: function(msg){
-			 			  window.location.reload();
-			 		   }
-			 		});
-			  }
-			});
-	});
-</script>
 </body></html>

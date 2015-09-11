@@ -17,9 +17,9 @@
                 <ul class="nav">
                   <li><a class="home active" href="${pageContext.request.contextPath}/index">首页</a>
                   </li>
-                  <li><a class="myaccount" href="${pageContext.request.contextPath}/gocategory">商品分类</a>
+                  <li><a class="myaccount" href="${pageContext.request.contextPath}/gocategory?category.id=1">商品分类</a>
                   </li>
-                  <li><a class="checkout" href="${pageContext.request.contextPath}/center">个人中心</a>
+                  <li><a class="checkout" href="${pageContext.request.contextPath}/myorder">个人中心</a>
                   </li>
                 </ul>
               </div>
@@ -40,7 +40,7 @@
 	           <a href="javascript:void(0)" style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown">${sessionScope.user.nickname }<b class="caret"></b></a>
 	               <ul class="dropdown-menu language" id='top_center'>
 	                <li>
-	                  <a href="${pageContext.request.contextPath}/center">个人中心</a>
+	                  <a href="${pageContext.request.contextPath}/myorder">个人中心</a>
 	                </li>
 	                 <li>
 	                  <a href="${pageContext.request.contextPath}/loginout">退出</a>

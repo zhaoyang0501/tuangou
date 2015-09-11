@@ -77,6 +77,7 @@ public class ItemAction  extends ActionSupport{
 			e.printStackTrace();
 			return ERROR;
 		}
+         categorys=categoryService.findCategorys();
          tip="新增商品成功";
        return SUCCESS;
 	}

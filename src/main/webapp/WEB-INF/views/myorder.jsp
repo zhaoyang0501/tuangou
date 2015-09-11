@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-    <%@ include file="validateLogin.jsp"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8">
 <title>懒人坊</title>
@@ -30,36 +31,36 @@
 <div id="maincontainer">
   <section id="product">
     <div class="container">
-      <div class="row" style="margin-top: 40px"> 
-      <div class="span12">
-       <h2 class="heading2" style="text-align: center;">${tip }</h2>
-  <!-- left avatar -->
-  <div class='row'>
-  <div class="span12">
-    <h1 class="page-title mb10">
-   		   ${user.nickname }的厨房
-    </h1>
-    <!-- basic info -->
-    </div>
-  </div>
-  <!-- middle info -->
-</div>
-      
-             
-      <div class="span12">
-           <div id="categorymenu">
-      <nav class="subnav">
-        <ul class="nav-pills categorymenu">
-		    <li><a href="${pageContext.request.contextPath}/centerCookBook">菜谱</a> </li> 
-			 <li><a href="${pageContext.request.contextPath}/centerCollect">个人收藏</a></li> 
-			  <li><a href="${pageContext.request.contextPath}/centerMsgBoard">留言板</a></li> 
-			   <li><a href="${pageContext.request.contextPath}/centerInfo">个人信息设置</a>  </li> 
-        </ul>
-       </nav>
-    </div>
-        </div>
-      
-       </div>
+      <input type="hidden" name='order.item.id' value="${item.id }">
+      <h1 class="heading1"><span class="maintext"> 我的订单</span><span class="subtext">所有订单</span></h1>
+      <!-- Cart-->
+      <div class="cart-info">
+        <table class="table table-striped table-bordered">
+          <tbody><tr>
+            <th class="image">图片</th>
+            <th class="name">商品名称</th>
+            <th class="quantity">数量</th>
+             <th class="price">单价</th>
+            <th class="total">总价</th>
+             <th class="quantity">下单日期</th>
+              <th class="quantity">付款方式</th>
+              <th class="quantity">状态</th>
+          </tr>
+          <c:forEach items="${orders }" var="bean">
+          <tr>
+            <td class="image"><a href="#"><img title="product" alt="product" src="${pageContext.request.contextPath}/upload/${bean.item.imgPath}" height="50" width="50"></a></td>
+            <td class="name"><a href="#">${bean.item.name}</a></td>
+            <td class="model">${bean.count}</td>
+            <td class="model">¥${bean.item.price}</td>
+            <td class="model">¥${bean.totalPrice}</td>
+            <td class="model">${bean.createDate}</td>
+            <td class="model"><span class='label label-info'> ${bean.payType}</span></td>
+            <td class="model"><span class='label label-important'>  ${bean.state}</span></td>
+          </tr>
+          </c:forEach>
+          
+        </tbody></table>
+      </div>
     </div>
   </section>
 </div>
@@ -82,5 +83,5 @@
 <script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
 <script type="text/javascript" src="js/jquery.ba-throttle-debounce.min.js"></script>
 <script defer="" src="js/custom.js"></script>
-
+<script type="text/javascript" src="js/jquery.raty.min.js"></script>
 </body></html>

@@ -16,7 +16,9 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.pzy.entity.Item;
 import com.pzy.entity.Order;
+import com.pzy.entity.User;
 import com.pzy.repository.OrderRepository;
 
 @Service
@@ -33,7 +35,9 @@ public class OrderService {
     public List<Order> findOrders() {
         return (List<Order>) orderRepository.findAll();
     }
-    
+    public List<Order> findByUser(User user){
+		return orderRepository.findByUser(user);
+	}
     public Page<Order> findAll(final int pageNumber, final int pageSize,final String state){
         PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize, new Sort(Direction.DESC, "id"));
        

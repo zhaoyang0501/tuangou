@@ -22,7 +22,6 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="centerAction" class="com.pzy.web.CenterAction"></bean>
 	<!--数据源配置,使用DBCP数据库连接池 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">

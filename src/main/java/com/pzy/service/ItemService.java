@@ -47,7 +47,6 @@ public class ItemService {
 				spec, pageRequest);
 		return result;
 	}
-
 	public Item save(Item item) {
 		return itemRepository.save(item);
 	}
