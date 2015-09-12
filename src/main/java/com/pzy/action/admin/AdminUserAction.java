@@ -1,6 +1,5 @@
 package com.pzy.action.admin;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,10 +15,16 @@ import org.springframework.data.domain.Page;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pzy.entity.AdminUser;
 import com.pzy.service.AdminUserService;
-
+/***
+ * 对于权限管理
+ * http://127.0.0.1:8080/tuangou/admin/adminuser/index
+ * @author 
+ *
+ */
 @Namespace("/admin/adminuser")
 @ParentPackage("json-default")
 public class AdminUserAction extends ActionSupport {
+	private static final long serialVersionUID = 1L;
 	private Integer sEcho = 1;
 	private Integer iDisplayStart = 0;
 	private Integer iDisplayLength = 10;
@@ -86,6 +91,7 @@ public class AdminUserAction extends ActionSupport {
 		resultMap.put("msg", "修改成功");
 		return SUCCESS;
 	}
+
 	@Action(value = "save", results = { @Result(name = "success", type = "json") }, params = {
 			"contentType", "text/html" })
 	public String save() {
@@ -94,6 +100,7 @@ public class AdminUserAction extends ActionSupport {
 		resultMap.put("msg", "保存成功");
 		return SUCCESS;
 	}
+
 	/* ~~~~~~~~get and setter~~~~~~~~~ */
 	@JSON
 	public Map<String, Object> getResultMap() {
@@ -128,7 +135,6 @@ public class AdminUserAction extends ActionSupport {
 		this.iDisplayLength = iDisplayLength;
 	}
 
-
 	public String getName() {
 		return name;
 	}
@@ -152,6 +158,7 @@ public class AdminUserAction extends ActionSupport {
 	public void setAdminuser(AdminUser adminUser) {
 		this.adminuser = adminUser;
 	}
+
 	public List<AdminUser> getAdminUsers() {
 		return adminUsers;
 	}
