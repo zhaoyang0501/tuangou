@@ -82,6 +82,26 @@ jQuery.adminItem = {
 							}
 						},
 						{
+							'aTargets' : [2],
+							'fnRender' : function(oObj, sVal) {
+								return "<img title='product' alt='product' src='../upload/"+sVal+"' height=''50' width='50'>";
+							}
+						},
+						
+						{
+							'aTargets' : [5],
+							'fnRender' : function(oObj, sVal) {
+								
+								var count=parseInt(sVal);
+								if(count<=10)
+								return "<span class='label label-important'>"+sVal+"</span>";
+								else if(count<50)
+									return "<span class='label label-warning'>"+sVal+"</span>";
+								else if(count>=50)
+									return "<span class='label label-success'>"+sVal+"</span>";
+							}
+						},
+						{
 							'aTargets' : [9],
 							'fnRender' : function(oObj, sVal) {
 								return "<button class=\"btn2 btn-info\" onclick=\"$.adminItem.showEdit("+oObj.aData.id+")\"><i class=\"icon-pencil\"></i>修改</button>"+
@@ -147,8 +167,8 @@ jQuery.adminItem = {
 	    		});
 		},
 		showEdit: function (id){
-			alert();
-			$("#id").val(id);
+		
+			$("input[name='item.id']").val(id);
 			$.ajax({
     			type : "get",
     			url : $.ace.getContextPath() + "/admin/item/get?id="+id,
@@ -157,8 +177,10 @@ jQuery.adminItem = {
     				if(json.resultMap.state=='success'){
     					$("#modal_header_label").text("修改商品");
     					$("#item_modal").modal('show');
+    					$("input[name='item.id']").val(json.resultMap.object.id);
     					$("input[name='item.name']").val(json.resultMap.object.name);
     					$("input[name='item.category.id']").val(json.resultMap.object.category.id);
+    					$("input[name='item.seller.id']").val(json.resultMap.object.seller.id);
     					$("input[name='item.count']").val(json.resultMap.object.count);
     					$("input[name='item.price']").val(json.resultMap.object.price);
     					$("input[name='item.remark']").val(json.resultMap.object.remark);

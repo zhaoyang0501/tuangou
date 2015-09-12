@@ -79,7 +79,7 @@ public class IndexAction extends ActionSupport{
 		return SUCCESS;
 	}
 	
-	@Action(value = "order", results = { @Result(name = "success", location = "/WEB-INF/views/order.jsp"),@Result(name = "login", location = "/WEB-INF/views/login.jsp") })
+	@Action(value = "order", results = { @Result(name = "success", location = "/WEB-INF/views/myorder.jsp"),@Result(name = "login", location = "/WEB-INF/views/login.jsp") })
 	public String order() throws Exception {
 		User user = (User) ServletActionContext.getRequest().getSession().getAttribute("user");
 		if(user==null){
@@ -91,6 +91,8 @@ public class IndexAction extends ActionSupport{
 			order.setCreateDate(new Date(System.currentTimeMillis()));
 			order.setUser(user);
 			order.setState("待审核");
+			this.tip="下单成功，请等待客服审核！";
+			orders=orderService.findByUser(user);
 			this.orderService.save(order);
 			 return SUCCESS;
 		}

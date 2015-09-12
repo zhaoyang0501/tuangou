@@ -62,7 +62,7 @@ jQuery.adminCategory = {
 					}],
 					"aoColumnDefs" : [
 						{
-							'aTargets' : [5],
+							'aTargets' : [4],
 							'fnRender' : function(oObj, sVal) {
 								return "<button class=\"btn2 btn-info\" onclick=\"$.adminCategory.showEdit("+oObj.aData.id+")\"><i class=\"icon-pencil\"></i>修改</button>"+
 								 "  <button class=\"btn2 btn-info\" onclick=\"$.adminCategory.deleteCategory("+oObj.aData.id+")\"><i class=\"icon-trash\"></i> 删除</button>";
@@ -133,7 +133,7 @@ jQuery.adminCategory = {
 	    			data:{
 	    				"category.id":$("#categoryId").val(),
 	    				"category.name":$("#name").val(),
-	    				"categorySub.remark":$("#remark").val()
+	    				"category.remark":$("#remark").val()
 	    			},
 	    			dataType : "json",
 	    			success : function(json) {
@@ -160,9 +160,9 @@ jQuery.adminCategory = {
     				if(json.resultMap.state=='success'){
     					$("#user_modal_header_label").text("修改分类");
     					$("#category_modal").modal('show');
-    					$("#name").val(json.resultMap.categorySub.name);
-    					$("#pid").val(json.resultMap.categorySub.category.id);
-    					$("#remark").val(json.resultMap.categorySub.remark);
+    					$("#name").val(json.resultMap.category.name);
+    					$("#pid").val(json.resultMap.category.id);
+    					$("#remark").val(json.resultMap.category.remark);
     				}else{
     					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"warning"});
     				}

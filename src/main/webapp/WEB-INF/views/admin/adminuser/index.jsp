@@ -62,6 +62,7 @@
 											<th >分类管理权限</th>
 											<th >供应商管理权限</th>
 											<th >商品管理权限</th>
+											<th >订单管理权限</th>
 											<th >权限管理权限</th>
 											<th >操作</th>
 										</tr>
@@ -136,7 +137,12 @@
 									<label><input id="role4" type="checkbox" value="yes" />商品管理权限： </label> 
 								</div>
 							</div>
-							
+							<div class="control-group">
+								<label for="name" class="control-label">订单管理权限：</label>
+								<div class="controls">
+									<label><input id="role5" type="checkbox" value="yes" />订单管理权限： </label> 
+								</div>
+							</div>
 							<div class="control-group">
 								<label for="name" class="control-label">权限管理权限：</label>
 								<div class="controls">

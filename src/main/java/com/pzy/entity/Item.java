@@ -24,7 +24,7 @@ public class Item  {
 	private Category category;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Category seller;
+	private Seller seller;
 	
 	public Double getPrice() {
 		return price;
@@ -35,11 +35,11 @@ public class Item  {
 	}
 
 	
-	public Category getSeller() {
+	public Seller getSeller() {
 		return seller;
 	}
 
-	public void setSeller(Category seller) {
+	public void setSeller(Seller seller) {
 		this.seller = seller;
 	}
 

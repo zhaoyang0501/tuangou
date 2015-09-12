@@ -75,6 +75,12 @@ public class AdminUserAction extends ActionSupport {
 		AdminUser bean = adminUserService.find(adminuser.getId());
 		bean.setName(adminuser.getName());
 		bean.setRemark(adminuser.getRemark());
+		bean.setRole1(adminuser.getRole1());
+		bean.setRole2(adminuser.getRole2());
+		bean.setRole3(adminuser.getRole3());
+		bean.setRole4(adminuser.getRole4());
+		bean.setRole5(adminuser.getRole5());
+		bean.setRole6(adminuser.getRole6());
 		adminUserService.save(bean);
 		resultMap.put("state", "success");
 		resultMap.put("msg", "修改成功");

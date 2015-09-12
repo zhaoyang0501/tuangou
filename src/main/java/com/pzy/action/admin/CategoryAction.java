@@ -55,16 +55,22 @@ public class CategoryAction extends ActionSupport {
 	@Action(value = "delete", results = { @Result(name = "success", type = "json") }, params = {
 			"contentType", "text/html" })
 	public String delete() {
-		categoryService.delete(id);
-		resultMap.put("state", "success");
-		resultMap.put("msg", "删除成功");
+		try {
+			categoryService.delete(id);
+			resultMap.put("state", "success");
+			resultMap.put("msg", "删除成功");
+		} catch (Exception e) {
+			 resultMap.put("state", "error");
+	         resultMap.put("msg", "删除失败，外键约束");
+		}
+		
 		return SUCCESS;
 	}
 
 	@Action(value = "get", results = { @Result(name = "success", type = "json") }, params = {
 			"contentType", "text/html" })
 	public String get() {
-		resultMap.put("categorySub", categoryService.find(id));
+		resultMap.put("category", categoryService.find(id));
 		resultMap.put("state", "success");
 		resultMap.put("msg", "删除成功");
 		return SUCCESS;

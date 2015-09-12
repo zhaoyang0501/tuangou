@@ -92,7 +92,7 @@
 				<div class="span12">
 					<div class="form-container grid-form form-background left-align form-horizontal">
 						 <form id='_form' action="${pageContext.request.contextPath}/admin/item/save"   enctype="multipart/form-data" method="post">
-							<input type="hidden" id="item.id" value="">
+							<input type="hidden" id="item.id" name='item.id' value="">
 							<div class="control-group">
 								<label for="name" class="control-label">商品图片：</label>
 								<div class="controls">
@@ -111,14 +111,22 @@
 								<label for="category" class="control-label">分类：</label>
 								<div class="controls">
 									<select id='category' name='item.category.id'>
-											<option value=""></option>
 											<c:forEach items="${categorys }" var="bean">
 												<option value="${bean.id }">${bean.name }</option>
 											</c:forEach>
 									</select>
 								</div>
 							</div>
-							
+							<div class="control-group" id='control_project'>
+								<label for="category" class="control-label">供应商：</label>
+								<div class="controls">
+									<select id='seller' name='item.seller.id'>
+											<c:forEach items="${sellers }" var="bean">
+												<option value="${bean.id }">${bean.name }</option>
+											</c:forEach>
+									</select>
+								</div>
+							</div>
 							
 							<div class="control-group">
 								<label for="name" class="control-label">库存：</label>

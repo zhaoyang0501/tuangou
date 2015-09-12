@@ -55,8 +55,7 @@
 							</div>
 							<div class="widget-container">
 								
-									<a class="btn btn-success" style="float: right; margin: 5px;" onclick="$.adminOrder.showaddModal()"><i class="icon-plus"></i> 新增</a>
-								<table class="responsive table table-striped table-bordered"
+									<table class="responsive table table-striped table-bordered"
 									id="dt_order_view">
 									<thead>
 										<tr>

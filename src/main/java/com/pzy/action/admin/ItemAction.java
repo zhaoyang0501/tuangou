@@ -20,8 +20,10 @@ import org.springframework.data.domain.Page;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pzy.entity.Category;
 import com.pzy.entity.Item;
+import com.pzy.entity.Seller;
 import com.pzy.service.CategoryService;
 import com.pzy.service.ItemService;
+import com.pzy.service.SellerService;
 
 @Namespace("/admin/item")
 @ParentPackage("json-default")  
@@ -32,8 +34,10 @@ public class ItemAction  extends ActionSupport{
      private String name;
      private Long id;
      private Item item;
-     private File imgPath;  
- 	 private String imgPathContentType;  
+     private File imgPath;
+     private List<Seller> sellers;
+
+	private String imgPathContentType;  
 	private String imgPathFileName;  
 	  private List<Category> categorys;
 	  private String tip;
@@ -42,8 +46,11 @@ public class ItemAction  extends ActionSupport{
      private ItemService itemService;
      @Autowired
      private CategoryService categoryService;
+     @Autowired
+     private SellerService sellerService;
      @Action(value = "index", results = { @Result(name = "success", location = "/WEB-INF/views/admin/item/index.jsp") }) 
      public String index(){
+    	 sellers=sellerService.findAll();
     	  categorys=categoryService.findCategorys();
           return SUCCESS;
      }
@@ -77,6 +84,7 @@ public class ItemAction  extends ActionSupport{
 			e.printStackTrace();
 			return ERROR;
 		}
+         sellers=sellerService.findAll();
          categorys=categoryService.findCategorys();
          tip="新增商品成功";
        return SUCCESS;
@@ -221,5 +229,12 @@ public class ItemAction  extends ActionSupport{
 	public void setImgPathFileName(String imgPathFileName) {
 		this.imgPathFileName = imgPathFileName;
 	}
+	 public List<Seller> getSellers() {
+			return sellers;
+		}
 
+
+		public void setSellers(List<Seller> sellers) {
+			this.sellers = sellers;
+		}
 }

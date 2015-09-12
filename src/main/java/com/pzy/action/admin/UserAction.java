@@ -77,6 +77,7 @@ public class UserAction  extends ActionSupport{
     userToupdate.setName(user.getName());
     userToupdate.setNickname(user.getNickname());
     userToupdate.setPassword(user.getPassword());
+    userToupdate.setSex(user.getSex());
     userService.save(userToupdate);
      resultMap.put("state", "success");
      resultMap.put("msg", "修改成功");

@@ -25,6 +25,13 @@ public class Order {
 	private Date createDate;
 	private String payType;
 	private String state;
+	private String addr;
+	public String getAddr() {
+		return addr;
+	}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
 	public Long getId() {
 		return id;
 	}

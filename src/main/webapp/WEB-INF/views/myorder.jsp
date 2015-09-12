@@ -31,12 +31,14 @@
 <div id="maincontainer">
   <section id="product">
     <div class="container">
+      <h2 class="heading2" style="text-align: center;">${tip }</h2>
       <input type="hidden" name='order.item.id' value="${item.id }">
       <h1 class="heading1"><span class="maintext"> 我的订单</span><span class="subtext">所有订单</span></h1>
       <!-- Cart-->
       <div class="cart-info">
         <table class="table table-striped table-bordered">
           <tbody><tr>
+           <th class="image">流水号</th>
             <th class="image">图片</th>
             <th class="name">商品名称</th>
             <th class="quantity">数量</th>
@@ -48,6 +50,7 @@
           </tr>
           <c:forEach items="${orders }" var="bean">
           <tr>
+            <td class="model">${bean.id}</td>
             <td class="image"><a href="#"><img title="product" alt="product" src="${pageContext.request.contextPath}/upload/${bean.item.imgPath}" height="50" width="50"></a></td>
             <td class="name"><a href="#">${bean.item.name}</a></td>
             <td class="model">${bean.count}</td>

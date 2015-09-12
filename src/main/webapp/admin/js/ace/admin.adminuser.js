@@ -68,6 +68,8 @@ jQuery.adminAdminuser = {
 					}, {
 						"mDataProp" : "role5"
 					}, {
+						"mDataProp" : "role6"
+					}, {
 						"mDataProp" : ""
 					}],
 					"aoColumnDefs" : [
@@ -115,9 +117,17 @@ jQuery.adminAdminuser = {
 								else
 									return "<span class='label label-important'>"+sVal+"</span>";
 							}
+						},{
+							'aTargets' : [9],
+							'fnRender' : function(oObj, sVal) {
+								if(sVal=='yes')
+									return "<span class='label label-info'>"+sVal+"</span>";
+								else
+									return "<span class='label label-important'>"+sVal+"</span>";
+							}
 						},
 						{
-							'aTargets' : [9],
+							'aTargets' : [10],
 							'fnRender' : function(oObj, sVal) {
 								return "<button class=\"btn2 btn-info\" onclick=\"$.adminAdminuser.showEdit("+oObj.aData.id+")\"><i class=\"icon-pencil\"></i>修改</button>"+
 								 "  <button class=\"btn2 btn-info\" onclick=\"$.adminAdminuser.deleteAdminuser("+oObj.aData.id+")\"><i class=\"icon-trash\"></i> 删除</button>";
@@ -162,8 +172,6 @@ jQuery.adminAdminuser = {
 			$("#adminuser_modal").modal('show');
 		},
 		save : function (){
-			alert(  document.getElementById("role1").checked);
-			alert($("#role1"));
 			if($.adminAdminuser.toSave){
 				$.ajax({
 	    			type : "post",
@@ -176,6 +184,7 @@ jQuery.adminAdminuser = {
 	    				"adminuser.role3":$("#role3").is(":checked")?"yes":"no",
 	    				"adminuser.role4":$("#role4").is(":checked")?"yes":"no",
 	    				"adminuser.role5":$("#role5").is(":checked")?"yes":"no",
+	    				"adminuser.role6":$("#role6").is(":checked")?"yes":"no",
 	    				"adminuser.remark":$("#remark").val()
 	    			},
 	    			dataType : "json",
@@ -196,7 +205,14 @@ jQuery.adminAdminuser = {
 	    			data:{
 	    				"adminuser.id":$("#adminuserId").val(),
 	    				"adminuser.name":$("#name").val(),
-	    				"adminuserSub.remark":$("#remark").val()
+	    				"adminuser.password":$("#password").val(),
+	    				"adminuser.role1":$("#role1").is(":checked")?"yes":"no",
+	    				"adminuser.role2":$("#role2").is(":checked")?"yes":"no",
+	    				"adminuser.role3":$("#role3").is(":checked")?"yes":"no",
+	    				"adminuser.role4":$("#role4").is(":checked")?"yes":"no",
+	    				"adminuser.role5":$("#role5").is(":checked")?"yes":"no",
+	    				"adminuser.role6":$("#role6").is(":checked")?"yes":"no",
+	    				"adminuser.remark":$("#remark").val()
 	    			},
 	    			dataType : "json",
 	    			success : function(json) {
@@ -230,6 +246,7 @@ jQuery.adminAdminuser = {
     					json.resultMap.adminuser.role3=='yes'?$("#role3").prop("checked",true):$("#role3").prop("checked",false);
     					json.resultMap.adminuser.role4=='yes'?$("#role4").prop("checked",true):$("#role4").prop("checked",false);
     					json.resultMap.adminuser.role5=='yes'?$("#role5").prop("checked",true):$("#role5").prop("checked",false);
+    					json.resultMap.adminuser.role6=='yes'?$("#role6").prop("checked",true):$("#role6").prop("checked",false);
     					$("#remark").val(json.resultMap.adminuser.remark);
     				}else{
     					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"warning"});
