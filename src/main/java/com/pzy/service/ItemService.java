@@ -61,7 +61,7 @@ public class ItemService {
 
 	public List<Item> findHot() {
 		return itemRepository.findAll(
-				new PageRequest(0, 6, new Sort(Direction.DESC, "count")))
+				new PageRequest(0, 6, new Sort(Direction.ASC, "count")))
 				.getContent();
 	}
 

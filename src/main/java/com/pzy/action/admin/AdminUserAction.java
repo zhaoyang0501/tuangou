@@ -29,33 +29,38 @@ public class AdminUserAction extends ActionSupport {
 	private Integer iDisplayStart = 0;
 	private Integer iDisplayLength = 10;
 	private Map<String, Object> resultMap = new HashMap<String, Object>();
-
 	private String name;
 	private Long id;
 	private AdminUser adminuser;
 	private List<AdminUser> adminUsers;
+	
 	@Autowired
 	private AdminUserService adminUserService;
-
+	
 	@Action(value = "index", results = { @Result(name = "success", location = "/WEB-INF/views/admin/adminUser/index.jsp") })
 	public String index() {
 		return SUCCESS;
 	}
-
+	/***
+	 * 点击查询按钮触发的AJAX请求，分页查询
+	 * @return
+	 */
 	@Action(value = "list", results = { @Result(name = "success", type = "json") }, params = {
 			"contentType", "text/html" })
 	public String list() {
 		int pageNumber = (int) (iDisplayStart / iDisplayLength) + 1;
 		int pageSize = iDisplayLength;
-		Page<AdminUser> list = adminUserService.findAll(pageNumber, pageSize,
-				name);
+		Page<AdminUser> list = adminUserService.findAll(pageNumber, pageSize,name);
 		resultMap.put("aaData", list.getContent());
 		resultMap.put("iTotalRecords", list.getTotalElements());
 		resultMap.put("iTotalDisplayRecords", list.getTotalElements());
 		resultMap.put("sEcho", sEcho);
 		return SUCCESS;
 	}
-
+	/***
+	 * 点击删除按钮
+	 * @return
+	 */
 	@Action(value = "delete", results = { @Result(name = "success", type = "json") }, params = {
 			"contentType", "text/html" })
 	public String delete() {
@@ -64,7 +69,10 @@ public class AdminUserAction extends ActionSupport {
 		resultMap.put("msg", "删除成功");
 		return SUCCESS;
 	}
-
+	/***
+	 * 点击编辑按钮
+	 * @return
+	 */
 	@Action(value = "get", results = { @Result(name = "success", type = "json") }, params = {
 			"contentType", "text/html" })
 	public String get() {
@@ -73,7 +81,10 @@ public class AdminUserAction extends ActionSupport {
 		resultMap.put("msg", "删除成功");
 		return SUCCESS;
 	}
-
+	/***
+	 * 修改时点击保存按钮
+	 * @return
+	 */
 	@Action(value = "update", results = { @Result(name = "success", type = "json") }, params = {
 			"contentType", "text/html" })
 	public String update() {

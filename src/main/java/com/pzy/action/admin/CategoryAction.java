@@ -17,9 +17,17 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.pzy.entity.Category;
 import com.pzy.service.CategoryService;
 
+/***
+ * 后台分类管理 http://127.0.0.1:8080/tuangou/admin/category/index
+ *
+ */
 @Namespace("/admin/category")
 @ParentPackage("json-default")
 public class CategoryAction extends ActionSupport {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer sEcho = 1;
 	private Integer iDisplayStart = 0;
 	private Integer iDisplayLength = 10;
@@ -34,7 +42,7 @@ public class CategoryAction extends ActionSupport {
 
 	@Action(value = "index", results = { @Result(name = "success", location = "/WEB-INF/views/admin/category/index.jsp") })
 	public String index() {
-		categorys=categoryService.findCategorys();
+		categorys = categoryService.findCategorys();
 		return SUCCESS;
 	}
 
@@ -60,10 +68,10 @@ public class CategoryAction extends ActionSupport {
 			resultMap.put("state", "success");
 			resultMap.put("msg", "删除成功");
 		} catch (Exception e) {
-			 resultMap.put("state", "error");
-	         resultMap.put("msg", "删除失败，外键约束");
+			resultMap.put("state", "error");
+			resultMap.put("msg", "删除失败，外键约束");
 		}
-		
+
 		return SUCCESS;
 	}
 
@@ -87,6 +95,7 @@ public class CategoryAction extends ActionSupport {
 		resultMap.put("msg", "修改成功");
 		return SUCCESS;
 	}
+
 	@Action(value = "save", results = { @Result(name = "success", type = "json") }, params = {
 			"contentType", "text/html" })
 	public String save() {
@@ -96,6 +105,7 @@ public class CategoryAction extends ActionSupport {
 		resultMap.put("msg", "保存成功");
 		return SUCCESS;
 	}
+
 	/* ~~~~~~~~get and setter~~~~~~~~~ */
 	@JSON
 	public Map<String, Object> getResultMap() {
@@ -130,7 +140,6 @@ public class CategoryAction extends ActionSupport {
 		this.iDisplayLength = iDisplayLength;
 	}
 
-
 	public String getName() {
 		return name;
 	}
@@ -154,6 +163,7 @@ public class CategoryAction extends ActionSupport {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+
 	public List<Category> getCategorys() {
 		return categorys;
 	}

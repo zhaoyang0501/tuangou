@@ -13,18 +13,34 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pzy.entity.User;
 import com.pzy.service.UserService;
+/***
+ * 登录操作
+ *
+ *
+ */
 @ParentPackage("struts-default")  
 @Namespace("/")
 public class LoginAction extends ActionSupport implements SessionAware {
+	private static final long serialVersionUID = 1L;
 	private Map<String,Object> session;
 	private String tip;
 	private User user;
 	@Autowired
 	UserService userService;
+	/***
+	 * 跳转到登录页面
+	 * @return
+	 */
 	@Action(value = "login", results = { @Result(name = "success", location = "/WEB-INF/views/login.jsp") })
 	public String login(){
 		return SUCCESS;
 	}
+	
+	/***
+	 * 登录逻辑 查找数据库比较用户名密码
+	 * @return
+	 * @throws Exception
+	 */
 	 @Action(value = "dologin", 
 	    		results = { @Result(name = "success" ,type="redirect", location = "index") ,
 	    					@Result(name = "login", location = "/WEB-INF/views/login.jsp") })  
@@ -41,7 +57,13 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	    	}
 	    	
 	}
-	  @Action(value = "loginout", results = { @Result(type="redirect", location = "index") })  
+	
+	 /***
+	  * 退出
+	  * @return
+	  * @throws Exception
+	  */
+	@Action(value = "loginout", results = { @Result(type="redirect", location = "index") })  
 	public String loginout() throws Exception {  
 	    	ActionContext.getContext().getSession().clear();
 	    	return SUCCESS;

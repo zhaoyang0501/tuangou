@@ -1,10 +1,13 @@
 package com.pzy.entity;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+/***
+ * 管理员用户
+ *
+ */
 @Entity
 @Table(name = "t_adminuser")
 public class AdminUser {

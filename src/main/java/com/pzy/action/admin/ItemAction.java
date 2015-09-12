@@ -25,106 +25,121 @@ import com.pzy.service.CategoryService;
 import com.pzy.service.ItemService;
 import com.pzy.service.SellerService;
 
+/***
+ * 后台商品管理 http://127.0.0.1:8080/tuangou/admin/item/index
+ *
+ *
+ */
 @Namespace("/admin/item")
-@ParentPackage("json-default")  
-public class ItemAction  extends ActionSupport{
-     private Integer sEcho=1;
-     private Integer iDisplayStart=0;
-     private Integer iDisplayLength=10;
-     private String name;
-     private Long id;
-     private Item item;
-     private File imgPath;
-     private List<Seller> sellers;
+@ParentPackage("json-default")
+public class ItemAction extends ActionSupport {
+	private static final long serialVersionUID = 1L;
+	/**跟分页有关的参数*/
+	private Integer sEcho = 1;
+	private Integer iDisplayStart = 0;
+	private Integer iDisplayLength = 10;
+	private Map<String, Object> resultMap = new HashMap<String, Object>();
+	
+	private String name;
+	private Long id;
+	private Item item;
+	/**操作提示返回的消息*/
+	private String tip;
+	/*这三个参数用于文件上传**/
+	private File imgPath;
+	private String imgPathContentType;
+	private String imgPathFileName;
+	private List<Seller> sellers;
+	private List<Category> categorys;
+	@Autowired
+	private ItemService itemService;
+	@Autowired
+	private CategoryService categoryService;
+	@Autowired
+	private SellerService sellerService;
 
-	private String imgPathContentType;  
-	private String imgPathFileName;  
-	  private List<Category> categorys;
-	  private String tip;
-	private Map<String,Object> resultMap= new HashMap<String,Object>();
-     @Autowired
-     private ItemService itemService;
-     @Autowired
-     private CategoryService categoryService;
-     @Autowired
-     private SellerService sellerService;
-     @Action(value = "index", results = { @Result(name = "success", location = "/WEB-INF/views/admin/item/index.jsp") }) 
-     public String index(){
-    	 sellers=sellerService.findAll();
-    	  categorys=categoryService.findCategorys();
-          return SUCCESS;
-     }
-    
-     
-    @Action(value = "list", results = { @Result(name = "success", type = "json") }, params = { "contentType", "text/html" })  
-     public String list(){
-         int pageNumber = (int) (iDisplayStart / iDisplayLength) + 1;
-          int pageSize = iDisplayLength;
-          Page<Item> list = itemService.findAll(pageNumber, pageSize, name);
-          resultMap.put("aaData", list.getContent());
-          resultMap.put("iTotalRecords", list.getTotalElements());
-          resultMap.put("iTotalDisplayRecords", list.getTotalElements());
-          resultMap.put("sEcho", sEcho);
-          return SUCCESS;
-     }
-     
-    
-    @Action(value = "save", results = { @Result(name = "success", location = "/WEB-INF/views/admin/item/index.jsp") })
+	@Action(value = "index", results = { @Result(name = "success", location = "/WEB-INF/views/admin/item/index.jsp") })
+	public String index() {
+		sellers = sellerService.findAll();
+		categorys = categoryService.findCategorys();
+		return SUCCESS;
+	}
+
+	@Action(value = "list", results = { @Result(name = "success", type = "json") }, params = {
+			"contentType", "text/html" })
+	public String list() {
+		int pageNumber = (int) (iDisplayStart / iDisplayLength) + 1;
+		int pageSize = iDisplayLength;
+		Page<Item> list = itemService.findAll(pageNumber, pageSize, name);
+		resultMap.put("aaData", list.getContent());
+		resultMap.put("iTotalRecords", list.getTotalElements());
+		resultMap.put("iTotalDisplayRecords", list.getTotalElements());
+		resultMap.put("sEcho", sEcho);
+		return SUCCESS;
+	}
+
+	@Action(value = "save", results = { @Result(name = "success", location = "/WEB-INF/views/admin/item/index.jsp") })
 	public String save() throws Exception {
-    	item.setCreateDate(new Date(System.currentTimeMillis()));
+		item.setCreateDate(new Date(System.currentTimeMillis()));
 		item.setImgPath(this.imgPathFileName);
 		itemService.save(item);
-		/**文件上传逻辑*/
-		String realpath = ServletActionContext.getServletContext().getRealPath("/upload");
+		/** 文件上传逻辑 */
+		String realpath = ServletActionContext.getServletContext().getRealPath(
+				"/upload");
 		System.out.println(realpath);
 		File saveImg = new File(new File(realpath), this.imgPathFileName);
-         try {
+		try {
 			FileUtils.copyFile(imgPath, saveImg);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return ERROR;
 		}
-         sellers=sellerService.findAll();
-         categorys=categoryService.findCategorys();
-         tip="新增商品成功";
-       return SUCCESS;
+		sellers = sellerService.findAll();
+		categorys = categoryService.findCategorys();
+		tip = "新增商品成功";
+		return SUCCESS;
 	}
-    
-    @Action(value = "delete", results = { @Result(name = "success", type = "json") }, params = { "contentType", "text/html" })  
-        public String delete(){
-         try {
-        	 itemService.delete(id);
-			 resultMap.put("state", "success");
-	         resultMap.put("msg", "删除成功");
+
+	@Action(value = "delete", results = { @Result(name = "success", type = "json") }, params = {
+			"contentType", "text/html" })
+	public String delete() {
+		try {
+			itemService.delete(id);
+			resultMap.put("state", "success");
+			resultMap.put("msg", "删除成功");
 		} catch (Exception e) {
-			 resultMap.put("state", "error");
-	         resultMap.put("msg", "删除失败，外键约束");
+			resultMap.put("state", "error");
+			resultMap.put("msg", "删除失败，外键约束");
 		}
-         
-             return SUCCESS;
-        }
-    @Action(value = "get", results = { @Result(name = "success", type = "json") }, params = { "contentType", "text/html" })  
-    public String get(){
-     resultMap.put("object", itemService.find(id));
-     resultMap.put("state", "success");
-     resultMap.put("msg", "成功");
-         return SUCCESS;
-    }
-    
-    @Action(value = "update", results = { @Result(name = "success", type = "json") }, params = { "contentType", "text/html" })  
-    public String update(){
-    Item itemToupdate= itemService.find(item.getId());
-    itemToupdate.setCategory(item.getCategory());
-    itemToupdate.setCount(item.getCount());
-    itemToupdate.setName(item.getName());
-    itemToupdate.setRemark(item.getRemark());
-    itemToupdate.setScore(item.getScore());
-    itemService.save(itemToupdate);
-     resultMap.put("state", "success");
-     resultMap.put("msg", "修改成功");
-     return SUCCESS;
-    }
-     /*~~~~~~~~get and setter~~~~~~~~~*/
+
+		return SUCCESS;
+	}
+
+	@Action(value = "get", results = { @Result(name = "success", type = "json") }, params = {
+			"contentType", "text/html" })
+	public String get() {
+		resultMap.put("object", itemService.find(id));
+		resultMap.put("state", "success");
+		resultMap.put("msg", "成功");
+		return SUCCESS;
+	}
+
+	@Action(value = "update", results = { @Result(name = "success", type = "json") }, params = {
+			"contentType", "text/html" })
+	public String update() {
+		Item itemToupdate = itemService.find(item.getId());
+		itemToupdate.setCategory(item.getCategory());
+		itemToupdate.setCount(item.getCount());
+		itemToupdate.setName(item.getName());
+		itemToupdate.setRemark(item.getRemark());
+		itemToupdate.setScore(item.getScore());
+		itemService.save(itemToupdate);
+		resultMap.put("state", "success");
+		resultMap.put("msg", "修改成功");
+		return SUCCESS;
+	}
+
+	/* ~~~~~~~~get and setter~~~~~~~~~ */
 	@JSON
 	public Map<String, Object> getResultMap() {
 		return resultMap;
@@ -229,12 +244,12 @@ public class ItemAction  extends ActionSupport{
 	public void setImgPathFileName(String imgPathFileName) {
 		this.imgPathFileName = imgPathFileName;
 	}
-	 public List<Seller> getSellers() {
-			return sellers;
-		}
 
+	public List<Seller> getSellers() {
+		return sellers;
+	}
 
-		public void setSellers(List<Seller> sellers) {
-			this.sellers = sellers;
-		}
+	public void setSellers(List<Seller> sellers) {
+		this.sellers = sellers;
+	}
 }

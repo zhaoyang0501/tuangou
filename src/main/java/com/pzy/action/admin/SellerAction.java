@@ -1,6 +1,5 @@
 package com.pzy.action.admin;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,10 +15,15 @@ import org.springframework.data.domain.Page;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pzy.entity.Seller;
 import com.pzy.service.SellerService;
-
+/***
+ * 供应商管理
+ * http://127.0.0.1:8080/tuangou/admin/seller/index
+ *
+ */
 @Namespace("/admin/seller")
 @ParentPackage("json-default")
 public class SellerAction extends ActionSupport {
+	private static final long serialVersionUID = 1L;
 	private Integer sEcho = 1;
 	private Integer iDisplayStart = 0;
 	private Integer iDisplayLength = 10;
@@ -34,7 +38,7 @@ public class SellerAction extends ActionSupport {
 
 	@Action(value = "index", results = { @Result(name = "success", location = "/WEB-INF/views/admin/seller/index.jsp") })
 	public String index() {
-		sellers=sellerService.findSellers();
+		sellers = sellerService.findSellers();
 		return SUCCESS;
 	}
 
@@ -43,8 +47,7 @@ public class SellerAction extends ActionSupport {
 	public String list() {
 		int pageNumber = (int) (iDisplayStart / iDisplayLength) + 1;
 		int pageSize = iDisplayLength;
-		Page<Seller> list = sellerService.findAll(pageNumber, pageSize,
-				name);
+		Page<Seller> list = sellerService.findAll(pageNumber, pageSize, name);
 		resultMap.put("aaData", list.getContent());
 		resultMap.put("iTotalRecords", list.getTotalElements());
 		resultMap.put("iTotalDisplayRecords", list.getTotalElements());
@@ -64,7 +67,7 @@ public class SellerAction extends ActionSupport {
 	@Action(value = "get", results = { @Result(name = "success", type = "json") }, params = {
 			"contentType", "text/html" })
 	public String get() {
-	 	 resultMap.put("seller", sellerService.find(id));
+		resultMap.put("seller", sellerService.find(id));
 		resultMap.put("state", "success");
 		resultMap.put("msg", "删除成功");
 		return SUCCESS;
@@ -84,6 +87,7 @@ public class SellerAction extends ActionSupport {
 		resultMap.put("msg", "修改成功");
 		return SUCCESS;
 	}
+
 	@Action(value = "save", results = { @Result(name = "success", type = "json") }, params = {
 			"contentType", "text/html" })
 	public String save() {
@@ -92,6 +96,7 @@ public class SellerAction extends ActionSupport {
 		resultMap.put("msg", "保存成功");
 		return SUCCESS;
 	}
+
 	/* ~~~~~~~~get and setter~~~~~~~~~ */
 	@JSON
 	public Map<String, Object> getResultMap() {
@@ -126,7 +131,6 @@ public class SellerAction extends ActionSupport {
 		this.iDisplayLength = iDisplayLength;
 	}
 
-
 	public String getName() {
 		return name;
 	}
@@ -150,6 +154,7 @@ public class SellerAction extends ActionSupport {
 	public void setSeller(Seller seller) {
 		this.seller = seller;
 	}
+
 	public List<Seller> getSellers() {
 		return sellers;
 	}

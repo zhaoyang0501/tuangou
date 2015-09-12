@@ -1,5 +1,8 @@
 package com.pzy.entity;
-
+/***
+ *订单
+ *
+ */
 import java.sql.Date;
 
 import javax.persistence.Entity;

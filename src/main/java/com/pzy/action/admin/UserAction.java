@@ -18,7 +18,8 @@ import com.pzy.service.UserService;
 @Namespace("/admin/user")
 @ParentPackage("json-default")  
 public class UserAction  extends ActionSupport{
-     private Integer sEcho=1;
+	private static final long serialVersionUID = 1L;
+	private Integer sEcho=1;
      private Integer iDisplayStart=0;
      private Integer iDisplayLength=10;
      private String userName;

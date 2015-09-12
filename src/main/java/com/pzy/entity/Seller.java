@@ -5,6 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+/***
+ *g供应商
+ *
+ */
 @Entity
 @Table(name = "t_seller")
 public class Seller {

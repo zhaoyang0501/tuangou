@@ -16,7 +16,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.pzy.entity.Item;
 import com.pzy.entity.Order;
 import com.pzy.entity.User;
 import com.pzy.repository.OrderRepository;

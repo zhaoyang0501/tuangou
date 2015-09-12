@@ -16,10 +16,15 @@ import org.springframework.data.domain.Page;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pzy.entity.Order;
 import com.pzy.service.OrderService;
-
+/***
+ * 订单管理
+ * http://127.0.0.1:8080/tuangou/admin/order/index
+ *
+ */
 @Namespace("/admin/order")
 @ParentPackage("json-default")
 public class OrderAction extends ActionSupport {
+	private static final long serialVersionUID = 1L;
 	private Integer sEcho = 1;
 	private Integer iDisplayStart = 0;
 	private Integer iDisplayLength = 10;
@@ -34,7 +39,7 @@ public class OrderAction extends ActionSupport {
 
 	@Action(value = "index", results = { @Result(name = "success", location = "/WEB-INF/views/admin/order/index.jsp") })
 	public String index() {
-		orders=orderService.findOrders();
+		orders = orderService.findOrders();
 		return SUCCESS;
 	}
 
@@ -43,35 +48,42 @@ public class OrderAction extends ActionSupport {
 	public String list() {
 		int pageNumber = (int) (iDisplayStart / iDisplayLength) + 1;
 		int pageSize = iDisplayLength;
-		Page<Order> list = orderService.findAll(pageNumber, pageSize,
-				name);
+		Page<Order> list = orderService.findAll(pageNumber, pageSize, name);
 		resultMap.put("aaData", list.getContent());
 		resultMap.put("iTotalRecords", list.getTotalElements());
 		resultMap.put("iTotalDisplayRecords", list.getTotalElements());
 		resultMap.put("sEcho", sEcho);
 		return SUCCESS;
 	}
-	
+	/***
+	 * 点击发货按钮
+	 * @return
+	 */
 	@Action(value = "approveOk", results = { @Result(name = "success", type = "json") }, params = {
 			"contentType", "text/html" })
 	public String approveOk() {
-		Order order=orderService.find(id);
+		Order order = orderService.find(id);
 		order.setState("已发货");
 		orderService.save(order);
 		resultMap.put("state", "success");
 		resultMap.put("msg", "发货成功");
 		return SUCCESS;
 	}
+	/***
+	 * 点击审核退回
+	 * @return
+	 */
 	@Action(value = "approveNotOk", results = { @Result(name = "success", type = "json") }, params = {
 			"contentType", "text/html" })
 	public String approveNotOk() {
-		Order order=orderService.find(id);
+		Order order = orderService.find(id);
 		order.setState("审核不通过");
 		orderService.save(order);
 		resultMap.put("state", "success");
 		resultMap.put("msg", "退回成功");
 		return SUCCESS;
 	}
+
 	@Action(value = "delete", results = { @Result(name = "success", type = "json") }, params = {
 			"contentType", "text/html" })
 	public String delete() {
@@ -94,12 +106,13 @@ public class OrderAction extends ActionSupport {
 			"contentType", "text/html" })
 	public String update() {
 		Order bean = orderService.find(order.getId());
-		
+
 		orderService.save(bean);
 		resultMap.put("state", "success");
 		resultMap.put("msg", "修改成功");
 		return SUCCESS;
 	}
+
 	@Action(value = "save", results = { @Result(name = "success", type = "json") }, params = {
 			"contentType", "text/html" })
 	public String save() {
@@ -109,6 +122,7 @@ public class OrderAction extends ActionSupport {
 		resultMap.put("msg", "保存成功");
 		return SUCCESS;
 	}
+
 	/* ~~~~~~~~get and setter~~~~~~~~~ */
 	@JSON
 	public Map<String, Object> getResultMap() {
@@ -143,7 +157,6 @@ public class OrderAction extends ActionSupport {
 		this.iDisplayLength = iDisplayLength;
 	}
 
-
 	public String getName() {
 		return name;
 	}
@@ -167,6 +180,7 @@ public class OrderAction extends ActionSupport {
 	public void setOrder(Order order) {
 		this.order = order;
 	}
+
 	public List<Order> getOrders() {
 		return orders;
 	}

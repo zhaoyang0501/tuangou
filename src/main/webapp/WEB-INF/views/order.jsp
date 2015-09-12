@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8">
-<title>懒人坊</title>
+<title>一起购吧！</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -69,7 +69,7 @@
         <h4 class="heading4"> 请选择您的付款方式 </h4>
         <input name='order.payType' type="radio" class="radio" value="信用卡">  信用卡 <br>
         <input name='order.payType' type="radio" class="radio" value="在线支付">  在线支付 <br>
-        <input  name='order.payType' type="radio" class="radio" value="在线支付" checked="checked">  货到付款 <br><br>
+        <input  name='order.payType' type="radio" class="radio" value="货到付款" checked="checked">  货到付款 <br><br>
           <h4 class="heading4"> 填写您的送货地址</h4>
           <input type="text" style="width: 300px" name='order.addr'/>
       </div>
