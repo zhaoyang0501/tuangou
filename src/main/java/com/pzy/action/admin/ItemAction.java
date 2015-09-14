@@ -80,23 +80,24 @@ public class ItemAction extends ActionSupport {
 
 	@Action(value = "save", results = { @Result(name = "success", location = "/WEB-INF/views/admin/item/index.jsp") })
 	public String save() throws Exception {
-		item.setCreateDate(new Date(System.currentTimeMillis()));
-		item.setImgPath(this.imgPathFileName);
-		itemService.save(item);
-		/** 文件上传逻辑 */
-		String realpath = ServletActionContext.getServletContext().getRealPath(
-				"/upload");
-		System.out.println(realpath);
-		File saveImg = new File(new File(realpath), this.imgPathFileName);
-		try {
-			FileUtils.copyFile(imgPath, saveImg);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return ERROR;
+		if(item.getId()==null){
+			item.setImgPath(this.imgPathFileName);
+			/** 文件上传逻辑 */
+			String realpath = ServletActionContext.getServletContext().getRealPath("/upload");
+			File saveImg = new File(new File(realpath), this.imgPathFileName);
+			try {
+				FileUtils.copyFile(imgPath, saveImg);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return ERROR;
+			}
 		}
+		item.setCreateDate(new Date(System.currentTimeMillis()));
+		itemService.save(item);
+		
 		sellers = sellerService.findAll();
 		categorys = categoryService.findCategorys();
-		tip = "新增商品成功";
+		tip = "操作成功！";
 		return SUCCESS;
 	}
 

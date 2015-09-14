@@ -126,7 +126,7 @@
 			},
 			ignore:"",
 			rules: {
-				"user.name":  "required",
+				"user.name":  {required:true, minlength: 8},
 				"user.password":  "required",
 				"user.nickname":  "required",
 				"user.email":  "email",
@@ -134,7 +134,8 @@
 				},
 			messages: {
 				"user.name":"请填写用户名",
-				"user.password":"请填写密码",
+				"user.password":{ required: "请输入密码",
+					minlength: "密码至少8位"},
 				"user.nickname":"请填写昵称",
 				"user.email":"请填写电子邮件",
 				"user.address":"请填写地址"

@@ -52,4 +52,10 @@ public class UserService {
 	public User find(Long id){
 		  return userRepository.findOne(id);
 	}
+	public User find(String name){
+		  List<User> users=userRepository.findByName(name);
+		  if(users!=null&&users.size()>=1)
+			  return users.get(0);
+		  else return null;
+	}
 }

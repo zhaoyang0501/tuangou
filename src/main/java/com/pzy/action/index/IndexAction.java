@@ -18,6 +18,8 @@ import com.pzy.entity.User;
 import com.pzy.service.CategoryService;
 import com.pzy.service.ItemService;
 import com.pzy.service.OrderService;
+import com.pzy.service.UserService;
+import com.pzy.util.MailUtil;
 /***
  * 处理前台的各种跳转
  * @author Administrator
@@ -35,6 +37,8 @@ public class IndexAction extends ActionSupport {
 	CategoryService categoryService;
 	@Autowired
 	OrderService orderService;
+	@Autowired
+	UserService userService;
 	private Item item;
 	private Order order;
 	private Category category;
@@ -44,6 +48,7 @@ public class IndexAction extends ActionSupport {
 	private List<Order> orders;
 	private String tip;
 	private String key;
+	private String userName;
 	/***首页
 	 * 对应http://127.0.0.1:8080/tuangou/
 	 */
@@ -142,7 +147,36 @@ public class IndexAction extends ActionSupport {
 		categorys = categoryService.findCategorys();
 		return SUCCESS;
 	}
-
+	/***
+	 * 找回密码
+	 */
+	@Action(value = "forgot", results = { @Result(name = "success", location = "/WEB-INF/views/forgot.jsp") })
+	public String forgot() throws Exception {
+		return SUCCESS;
+	}
+	/***
+	 * 找回密码
+	 */
+	@Action(value = "doforgot", results = { @Result(name = "success", location = "/WEB-INF/views/forgot.jsp"),@Result(name = "input", location = "/WEB-INF/views/forgot.jsp") })
+	public String doforgot() throws Exception {
+		User user=this.userService.find(userName);
+		if(user==null){
+			tip="用户不存在";
+			return INPUT;
+		}
+		if(user.getEmail()==null){
+			tip="用户邮箱不正确";
+			return INPUT;
+		}
+		try {
+			MailUtil.sendEmail(user);
+		} catch (Exception e) {
+			tip="邮件发送失败";
+			return INPUT;
+		}
+		tip="已发送找回密码到邮箱"+user.getEmail()+"，请注意查收";
+		return SUCCESS;
+	}
 	public List<Category> getCategorys() {
 		return categorys;
 	}
@@ -221,5 +255,10 @@ public class IndexAction extends ActionSupport {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 }
