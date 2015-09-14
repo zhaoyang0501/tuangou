@@ -87,13 +87,24 @@ public class ItemAction extends ActionSupport {
 			File saveImg = new File(new File(realpath), this.imgPathFileName);
 			try {
 				FileUtils.copyFile(imgPath, saveImg);
+				item.setCreateDate(new Date(System.currentTimeMillis()));
+				itemService.save(item);
 			} catch (IOException e) {
 				e.printStackTrace();
 				return ERROR;
 			}
+		}else{
+			Item newitem=itemService.find(item.getId());
+			newitem.setCategory(item.getCategory());
+			newitem.setCount(item.getCount());
+			newitem.setName(item.getName());
+			newitem.setPrice(item.getPrice());
+			newitem.setRemark(item.getRemark());
+			newitem.setScore(item.getScore());
+			newitem.setSeller(item.getSeller());
+			itemService.save(newitem);
 		}
-		item.setCreateDate(new Date(System.currentTimeMillis()));
-		itemService.save(item);
+		
 		
 		sellers = sellerService.findAll();
 		categorys = categoryService.findCategorys();

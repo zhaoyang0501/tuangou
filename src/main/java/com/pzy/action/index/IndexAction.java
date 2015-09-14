@@ -116,6 +116,7 @@ public class IndexAction extends ActionSupport {
 			order.setTotalPrice(item.getPrice() * order.getCount());
 			order.setCreateDate(new Date(System.currentTimeMillis()));
 			order.setUser(user);
+			order.setItem(item);
 			order.setState("待审核");
 			this.orderService.save(order);
 			this.tip = "下单成功，请等待客服审核！";

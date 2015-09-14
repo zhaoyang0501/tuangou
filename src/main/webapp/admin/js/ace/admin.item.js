@@ -183,7 +183,7 @@ jQuery.adminItem = {
     					$("input[name='item.seller.id']").val(json.resultMap.object.seller.id);
     					$("input[name='item.count']").val(json.resultMap.object.count);
     					$("input[name='item.price']").val(json.resultMap.object.price);
-    					$("input[name='item.remark']").val(json.resultMap.object.remark);
+    					$("textarea[name='item.remark']").html(json.resultMap.object.remark);
     				}else{
     					noty({"text":""+ json.resultMap.msg +"","layout":"top","type":"warning"});
     				}

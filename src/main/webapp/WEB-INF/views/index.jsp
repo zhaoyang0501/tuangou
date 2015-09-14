@@ -97,7 +97,7 @@ color: #96979d  !important;
 				        <li class="span3">
 				          <a class="prdocutname" href="product.html">${bean.name } </a>
 				          <div class="thumbnail">
-				            <span class="sale tooltip-test" data-original-title="">Sale</span>
+				            <span class="new tooltip-test" data-original-title="">Sale</span>
 				            <a href="${pageContext.request.contextPath}/detail?item.id=${bean.id}"><img alt="" src="${pageContext.request.contextPath}/upload/${bean.imgPath}"></a>
 				           
 				            <div class="pricetag">

@@ -126,8 +126,8 @@
 			},
 			ignore:"",
 			rules: {
-				"user.name":  {required:true, minlength: 8},
-				"user.password":  "required",
+				"user.name":  "required",
+				"user.password":  {required:true, minlength: 8},
 				"user.nickname":  "required",
 				"user.email":  "email",
 				"user.address":  "required"
