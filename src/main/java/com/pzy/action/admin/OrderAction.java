@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.pzy.entity.Item;
 import com.pzy.entity.Order;
+import com.pzy.service.ItemService;
 import com.pzy.service.OrderService;
 /***
  * 订单管理
@@ -36,6 +38,8 @@ public class OrderAction extends ActionSupport {
 	private List<Order> orders;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private ItemService  itemService;
 
 	@Action(value = "index", results = { @Result(name = "success", location = "/WEB-INF/views/admin/order/index.jsp") })
 	public String index() {
@@ -78,6 +82,9 @@ public class OrderAction extends ActionSupport {
 	public String approveNotOk() {
 		Order order = orderService.find(id);
 		order.setState("审核不通过");
+		Item item=order.getItem();
+		item.setCount(item.getCount()+1);
+		itemService.save(item);
 		orderService.save(order);
 		resultMap.put("state", "success");
 		resultMap.put("msg", "退回成功");

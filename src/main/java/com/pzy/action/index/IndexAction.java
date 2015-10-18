@@ -113,6 +113,8 @@ public class IndexAction extends ActionSupport {
 			return LOGIN;
 		} else {
 			item = this.itemService.find(order.getItem().getId());
+			item.setCount(item.getCount()-1);
+			itemService.save(item);
 			order.setTotalPrice(item.getPrice() * order.getCount());
 			order.setCreateDate(new Date(System.currentTimeMillis()));
 			order.setUser(user);

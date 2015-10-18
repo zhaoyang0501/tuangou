@@ -53,7 +53,6 @@
                     <label class="control-label">用户名:</label>
                     <div class="controls">
                       <input type="text" class="span3" name='user.name'>
-                      <a href="./forgot">忘记密码?</a>
                     </div>
                   </div>
                   <div class="control-group">
